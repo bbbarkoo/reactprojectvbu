@@ -18,15 +18,15 @@
 //   return (
 //     <Router>
 //       {/* <Header /> */}
-//           <Spinner />
-//           <Routes>
-//             <Route path="/" element={<MainContent />} />
-//             <Route path="/login" element={<LoginForm />} />
-//             <Route path="/landing" element={<LandingPage />} />
-//             <Route path="/write" element={<Write />} />
-//             <Route path="/read" element={<Read />} />
+//       <Spinner />
+//       <Routes>
+//         <Route path="/" element={<MainContent />} />
+//         <Route path="/login" element={<LoginForm />} />
+//         <Route path="/landing" element={<LandingPage />} />
+//         <Route path="/write" element={<Write />} />
+//         <Route path="/read" element={<Read />} />
 
-//           </Routes>
+//       </Routes>
 //     </Router>
 //   );
 // }
@@ -34,7 +34,7 @@
 // export default App;
 
 
-// src/App.jsx
+
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header2 from './components/Header2';
@@ -48,32 +48,39 @@ import LoginForm from './components/LoginForm'; // Assuming you have this compon
 import MyCoursesTable from './components/MyCoursesTable';
 import CourseList from './components/CourseList';
 import CourseRegistration from './components/CourseRegistration';
-import UserContext from './components/UserContext';
-
+import { StudentProvider } from './components/StudentContext';
+import UpdateRead from './components/UpdateRead';
 
 function HeaderController() {
   const location = useLocation();
   return location.pathname === '/' || location.pathname === '/login' ? <Header /> : <Header2 />;
 }
-
+function FooterController() {
+  const location = useLocation();
+  return location.pathname === '/' || location.pathname === '/login' ? null : <Footer />;
+}
 function App() {
-  const [matchedStudent, setMatchedStudent] = useState(null);
 
   return (
-    <UserContext.Provider value={matchedStudent}>
+    <StudentProvider>
+
       <Router>
         <HeaderController />
         <Routes>
+          <Route path="/" element={<MainContent />} />
+
           <Route path="/login" element={<LoginForm />} />
           <Route path="/landing" element={<LandingPage />} />
           <Route path="/mycourses" element={<MyCoursesTable />} />
           <Route path="/courselist" element={<CourseList />} />
           <Route path="/register" element={<CourseRegistration />} />
+          <Route path="/updateread" element={<UpdateRead />} />
         </Routes>
-        <Footer />
+        <FooterController />
         <Spinner /> {/* Assuming you want the spinner always visible */}
       </Router>
-    </UserContext.Provider>
+    </StudentProvider>
+
   );
 }
 

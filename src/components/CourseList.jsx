@@ -1,18 +1,18 @@
 import React from 'react';
 import app from "../firebaseConfig";
-import {getDatabase, ref, get} from "firebase/database";
+import { getDatabase, ref, get } from "firebase/database";
 import { useState, useEffect } from 'react';
 
-function CourseList () {
+function CourseList() {
     let [courseArray, setCourseArray] = useState([]);
 
-    const fetchData = async() => {
+    const fetchData = async () => {
         const db = getDatabase(app);
         const dbRef = ref(db, "school/courses");
         const snapshot = await get(dbRef);
-        if(snapshot.exists()){
+        if (snapshot.exists()) {
             setCourseArray(Object.values(snapshot.val()));
-        }else{
+        } else {
             alert("error");
         }
     }
@@ -22,25 +22,23 @@ function CourseList () {
 
     return (
         <div className="sm:px-6 w-full min-h-screen">
-            <div className="px-4 md:px-10 py-4 md:py-7">
+            <div className="px-4 md:px-10 py-4 md:py-7 mt-4  flex justify-between items-center">
                 <div className="flex items-center justify-center">
-                    <p
-                        tabIndex="0"
-                        className="focus:outline-none text-base sm:text-xl md:text-2xl lg:text-4xl font-bold leading-normal text-gray-800"
-                    >
+                    <p tabIndex="0" className="focus:outline-none text-base sm:text-4xl md:text-4xl lg:text-4xl font-bold leading-normal text-gray-800">
                         COURSE LIST
                     </p>
                 </div>
+
             </div>
             <div className="mt-7 overflow-x-auto flex justify-between">
                 <table className="w-full whitespace-nowrap mr-2" id="table1">
                     <tbody>
-                    {courseArray.map((course, index) => (
-                    <React.Fragment key={index}>
-                    <tr tabIndex="0" className="focus:outline-none h-16 border border-gray-100 rounded">
+                        {courseArray.map((course, index) => (
+                            <React.Fragment key={index}>
+                                <tr tabIndex="0" className="focus:outline-none h-16 border border-gray-100 rounded">
                                     <td>
                                         <div className="ml-5">
-                                        <p className="text-sm leading-none text-gray-600 ml-2">#{course.courseCode}</p>
+                                            <p className="text-sm leading-none text-gray-600 ml-2">#{course.courseCode}</p>
 
                                         </div>
                                     </td>
@@ -80,7 +78,7 @@ function CourseList () {
                                             <p className="text-sm leading-none text-gray-600 ml-2">{course.courseTeacher}</p>
                                         </div>
                                     </td>
-                                    
+
                                     <td className="pl-5">
                                         <div className="flex items-center">
                                             <svg
@@ -189,7 +187,7 @@ function CourseList () {
 
 
 
-        
+
     );
 };
 
